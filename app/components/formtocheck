@@ -1,0 +1,229 @@
+"use client";
+import React, { useState } from "react";
+
+const stateLGAData = {
+  Lagos: ["Ikeja", "Alimosho", "Kosofe", "Mushin"],
+  Abuja: ["Gwagwalada", "Abaji", "Kwali", "Bwari"],
+  Kano: ["Fagge", "Nassarawa", "Tarauni", "Dala"],
+  // Add more states and their LGAs here
+};
+
+const ParentForm = () => {
+  const [formData, setFormData] = useState({
+    title: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    gender: "",
+    phone: "",
+    address: "",
+    email: "",
+    image: "",
+    state: "",
+    lga: "",
+    religion: "",
+    dob: "",
+    occupation: "",
+  });
+
+  const [lgaOptions, setLgaOptions] = useState([]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    if (name === "state") {
+      setLgaOptions(stateLGAData[value] || []);
+      setFormData((prevData) => ({
+        ...prevData,
+        lga: "", // Reset LGA when state changes
+      }));
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission
+    console.log(formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="block font-medium">Title</label>
+        <select
+          name="title"
+          value={formData.title}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        >
+          <option value="">Select Title</option>
+          <option value="Mr">Mr</option>
+          <option value="Mrs">Mrs</option>
+          <option value="Miss">Miss</option>
+          <option value="Dr">Dr</option>
+        </select>
+      </div>
+
+      <div>
+        <label className="block font-medium">First Name</label>
+        <input
+          type="text"
+          name="firstName"
+          value={formData.firstName}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+
+      <div>
+        <label className="block font-medium">Middle Name</label>
+        <input
+          type="text"
+          name="middleName"
+          value={formData.middleName}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+
+      <div>
+        <label className="block font-medium">Last Name</label>
+        <input
+          type="text"
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+
+      <div>
+        <label className="block font-medium">Gender</label>
+        <select
+          name="gender"
+          value={formData.gender}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        >
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+
+      <div>
+        <label className="block font-medium">Phone</label>
+        <input
+          type="text"
+          name="phone"
+          value={formData.phone}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+
+      <div>
+        <label className="block font-medium">Address</label>
+        <input
+          type="text"
+          name="address"
+          value={formData.address}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+
+      <div>
+        <label className="block font-medium">Email</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+
+      <div>
+        <label className="block font-medium">State</label>
+        <select
+          name="state"
+          value={formData.state}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        >
+          <option value="">Select State</option>
+          {Object.keys(stateLGAData).map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label className="block font-medium">Local Government Area (LGA)</label>
+        <select
+          name="lga"
+          value={formData.lga}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+          disabled={!formData.state}
+        >
+          <option value="">Select LGA</option>
+          {lgaOptions.map((lga) => (
+            <option key={lga} value={lga}>
+              {lga}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div>
+        <label className="block font-medium">Religion</label>
+        <input
+          type="text"
+          name="religion"
+          value={formData.religion}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+
+      <div>
+        <label className="block font-medium">Date of Birth (DOB)</label>
+        <input
+          type="date"
+          name="dob"
+          value={formData.dob}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+
+      <div>
+        <label className="block font-medium">Occupation</label>
+        <input
+          type="text"
+          name="occupation"
+          value={formData.occupation}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      </div>
+
+      <button
+        type="submit"
+        className="w-full bg-blue-500 text-white p-2 rounded mt-4"
+      >
+        Submit
+      </button>
+    </form>
+  );
+};
+
+export default ParentForm;
